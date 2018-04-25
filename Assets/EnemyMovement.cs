@@ -9,8 +9,8 @@ public class EnemyMovement : MonoBehaviour {
 	// Use this for initialization
 	void Start () 
     {
-        //StartCoroutine(PrintAllWayPoints());
-        //print("I am at start"); // third execution
+        StartCoroutine(PrintAllWayPoints());
+        print("I am at start"); // third execution
     }
 
     IEnumerator PrintAllWayPoints() // to add coroutine change return type IEnumerator
