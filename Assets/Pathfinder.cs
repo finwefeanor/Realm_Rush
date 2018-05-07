@@ -6,13 +6,39 @@ using UnityEngine;
 public class Pathfinder : MonoBehaviour {
 
     Dictionary<Vector2Int, CubeWaypoint> grid = new Dictionary<Vector2Int, CubeWaypoint>();
+    Vector2Int[] directions = {
+        Vector2Int.up, 
+        Vector2Int.right,
+        Vector2Int.down,
+        Vector2Int.left,
+     /* new Vector2Int(1, 1),  // upright
+        new Vector2Int(1,-1), // downright
+        new Vector2Int(-1, 1),  // upleft
+        new Vector2Int(-1, -1),  // downleft
+     */
+    };
 
     public CubeWaypoint startPoint , endPoint;
+    
     // Use this for initialization
     void Start () 
     {
         LoadBlocks();
         ColorsStartandEnd();
+        ExploreNeighbors();
+    }
+
+    private void ExploreNeighbors() {
+        foreach (Vector2Int direction in directions)
+        {           
+            var ExploreGridPos = startPoint.GetGridPos() + direction;
+            print("Exploring block " + ExploreGridPos);
+
+            if (grid.ContainsKey(ExploreGridPos)) // or use try-catch
+            {
+                grid[ExploreGridPos].SetColor(Color.yellow);
+            }
+        }
     }
 
     private void ColorsStartandEnd() {
