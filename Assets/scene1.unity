@@ -1097,6 +1097,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPoint: {fileID: 89280069}
   endPoint: {fileID: 505702152}
+  isRunning: 0
 --- !u!1 &1237354421 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1651757807542868, guid: f6362e831fee48841b705bf7c1d43c6f,

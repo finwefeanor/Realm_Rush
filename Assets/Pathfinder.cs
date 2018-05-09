@@ -6,6 +6,8 @@ using UnityEngine;
 public class Pathfinder : MonoBehaviour {
 
     Dictionary<Vector2Int, CubeWaypoint> grid = new Dictionary<Vector2Int, CubeWaypoint>();
+    Queue<CubeWaypoint> queue = new Queue<CubeWaypoint>(); // we constructed this like Dictionary
+
     Vector2Int[] directions = {
         Vector2Int.up, 
         Vector2Int.right,
@@ -19,20 +21,39 @@ public class Pathfinder : MonoBehaviour {
     };
 
     public CubeWaypoint startPoint , endPoint;
+
+    public bool isRunning;
     
     // Use this for initialization
     void Start () 
     {
         LoadBlocks();
         ColorsStartandEnd();
-        ExploreNeighbors();
+        Pathfind();
+        //ExploreNeighbors();
+    }
+
+    private void Pathfind() {
+        queue.Enqueue(startPoint); //add the startpoint
+
+        while(queue.Count > 0) // we confirm something in the queue
+        {
+            isRunning = true;
+            var searchCenter = queue.Dequeue(); // take it out the queue again
+            print("Exploring from: " + searchCenter); // todo remove log
+            if (queue.Count < endPoint)
+            {
+                isRunning = false;
+                print("same paths!");
+            }
+        }
     }
 
     private void ExploreNeighbors() {
         foreach (Vector2Int direction in directions)
         {           
             var ExploreGridPos = startPoint.GetGridPos() + direction;
-            print("Exploring block " + ExploreGridPos);
+            //print("Exploring block " + ExploreGridPos);
 
             if (grid.ContainsKey(ExploreGridPos)) // or use try-catch
             {
