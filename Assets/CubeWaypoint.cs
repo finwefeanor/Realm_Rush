@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CubeWaypoint : MonoBehaviour {
 
+    public bool isExplored = false;
     const int gridSize = 10;
     Vector2Int gridPos;
 
