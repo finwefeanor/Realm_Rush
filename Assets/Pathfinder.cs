@@ -5,19 +5,21 @@ using UnityEngine;
 
 public class Pathfinder : MonoBehaviour {
 
+    [SerializeField] CubeWaypoint startPoint, endPoint;
+
     Dictionary<Vector2Int, CubeWaypoint> grid = new Dictionary<Vector2Int, CubeWaypoint>();
     Queue<CubeWaypoint> queue = new Queue<CubeWaypoint>(); // we constructed this like Dictionary
+    public bool isRunning = true;
 
+    // the current search center. 
+    CubeWaypoint searchStart; //we also promoted the local variable to member variable(or instant variable).
+                               
     Vector2Int[] directions = {
         Vector2Int.up, 
         Vector2Int.right,
         Vector2Int.down,
         Vector2Int.left,
     };
-
-    public CubeWaypoint startPoint , endPoint;
-
-    public bool isRunning = true;
 
     // Use this for initialization
     void Start () 
@@ -32,32 +34,32 @@ public class Pathfinder : MonoBehaviour {
 
         while (queue.Count > 0 && isRunning) // we confirm something in the queue
         {
-            var searchStart = queue.Dequeue(); // take it out the queue again
+            searchStart = queue.Dequeue(); // take it out the queue again
             print("Searching from: " + searchStart); // todo remove log   
-            PauseIfEndHasFound(searchStart);
-            ExploreNeighbors(searchStart);
+            PauseIfEndHasFound(); //it stops searching if end has found
+            ExploreNeighbors();
             searchStart.isExplored = true;
         }
 
-        print("Finished pathfinding");
+        print("Is Pathfinding Finished ? ");
     }
 
-    private void PauseIfEndHasFound(CubeWaypoint searchStart) 
+    private void PauseIfEndHasFound() 
     {
-        if (searchStart == endPoint)
+        if (searchStart == endPoint) //searchcenter is dynamic, not bound to startpoint
         {
-            print("same paths!");
+            print("Start - End are the same paths!");
             isRunning = false;
         }
     }
 
-    private void ExploreNeighbors(CubeWaypoint from) 
+    private void ExploreNeighbors() 
     {
         if(!isRunning) { return; } //this gets called even it is not running
 
         foreach (Vector2Int direction in directions)
         {           
-            var ExploreGridPos = from.GetGridPos() + direction;
+            var ExploreGridPos = searchStart.GetGridPos() + direction;
             //print("Exploring block " + ExploreGridPos);
             //
             if (grid.ContainsKey(ExploreGridPos)) // or use try-catch
@@ -66,26 +68,28 @@ public class Pathfinder : MonoBehaviour {
             }
         }
     }
-
+   
     private void QueueNewNeighbours(Vector2Int ExploreGridPos) 
     {
         CubeWaypoint neighbour = grid[ExploreGridPos];
-        if(neighbour.isExplored)
+        if(neighbour.isExplored || queue.Contains(neighbour))
         {
-            // do nothing
+            // do nothing   
         }
+
         else
         {
-            neighbour.SetColor(Color.yellow);
+            //neighbour.SetColor(Color.yellow);
             queue.Enqueue(neighbour);
-            print("Queueing " + neighbour);
+            neighbour.exploredFrom = searchStart;
+            print("Queueing " + neighbour);           
         }
-        
     }
 
-    private void ColorsStartandEnd() {
-        startPoint.SetColor(Color.cyan);
-        endPoint.SetColor(Color.red);
+    private void ColorsStartandEnd() 
+    {
+        //endPoint.SetColor(Color.red);
+        //startPoint.SetColor(Color.cyan);
     }
 
     private void LoadBlocks() {
