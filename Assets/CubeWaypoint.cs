@@ -15,26 +15,9 @@ public class CubeWaypoint : MonoBehaviour
 
     GameObject startWayPoint;
 
-    void Start() {
-        
-    }
-
     void Update() 
     {
-        SetColor();
-        //if (isExplored == true && exploredFrom == null)
-        //{
-        //    SetColor(Color.blue);
-        //}
-        //else if (isExplored == true)
-        //{
-        //    SetColor(Color.yellow);
-        //}
-        //else
-        //{
-        //    SetColor(Color.red);
-        //}
-
+        SetColor(); 
     }
 
     public int GetGridSize() 

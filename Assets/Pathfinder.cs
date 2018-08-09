@@ -10,10 +10,10 @@ public class Pathfinder : MonoBehaviour {
     Dictionary<Vector2Int, CubeWaypoint> grid = new Dictionary<Vector2Int, CubeWaypoint>();
     Queue<CubeWaypoint> queue = new Queue<CubeWaypoint>(); // we constructed this like Dictionary
     public bool isRunning = true;
+    CubeWaypoint searchStart; // the current search center. 
 
-    // the current search center. 
-    CubeWaypoint searchStart; //we also promoted the local variable to member variable(or instant variable).
-                               
+    List<CubeWaypoint> path = new List<CubeWaypoint>();
+
     Vector2Int[] directions = {
         Vector2Int.up, 
         Vector2Int.right,
@@ -21,34 +21,53 @@ public class Pathfinder : MonoBehaviour {
         Vector2Int.left,
     };
 
-    // Use this for initialization
-    void Start () 
+    public List<CubeWaypoint> PathSize() 
     {
         LoadBlocks();
         ColorsStartandEnd();
-        Pathfind();
+        ScanSearch(); // in fact Breadth First Search
+        CreatePath();
+        return path;  
+    }
+    
+
+    private void CreatePath() {
+        path.Add(endPoint);
+
+        CubeWaypoint previous = endPoint.exploredFrom;
+        while(previous != startPoint)
+        {
+            path.Add(previous);
+            previous = previous.exploredFrom;
+        }
+
+        // add start waypoint
+        path.Add(startPoint);
+        path.Reverse();
+        //reverse the list
+        
     }
 
-    private void Pathfind() {
+    private void ScanSearch() {
         queue.Enqueue(startPoint); //add the startpoint to the Queue- so assign the reference (queue) to Enqueue
 
         while (queue.Count > 0 && isRunning) // we confirm something in the queue
         {
             searchStart = queue.Dequeue(); // take it out the queue again
-            print("Searching from: " + searchStart); // todo remove log   
+            //print("Searching from: " + searchStart); // todo remove log   
             PauseIfEndHasFound(); //it stops searching if end has found
             ExploreNeighbors();
             searchStart.isExplored = true;
         }
 
-        print("Is Pathfinding Finished ? ");
+        //print("Is Pathfinding Finished ? ");
     }
 
     private void PauseIfEndHasFound() 
     {
         if (searchStart == endPoint) //searchcenter is dynamic, not bound to startpoint
         {
-            print("Start - End are the same paths!");
+            //print("Start - End are the same paths!");
             isRunning = false;
         }
     }
@@ -79,10 +98,9 @@ public class Pathfinder : MonoBehaviour {
 
         else
         {
-            //neighbour.SetColor(Color.yellow);
             queue.Enqueue(neighbour);
             neighbour.exploredFrom = searchStart;
-            print("Queueing " + neighbour);           
+            //print("Queueing " + neighbour);           
         }
     }
 
