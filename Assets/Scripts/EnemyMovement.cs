@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour {
     List<CubeWaypoint> path;
+    [SerializeField] float movingSpeed = 15f;
 
     void Start () 
     {
@@ -19,10 +20,16 @@ public class EnemyMovement : MonoBehaviour {
         print("Starting Patrol..."); //firstly executed
         foreach (CubeWaypoint waypoint in path)
         {
-            //print(element.name);
-            transform.position = waypoint.transform.position;
-            //print("Visiting block: " + waypoint); //second execution
-            yield return new WaitForSeconds(1.5f);
+
+            while (transform.position != waypoint.transform.position)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, waypoint.transform.position, movingSpeed * Time.deltaTime);
+                yield return null;
+            }
+            ////print(element.name);
+            //transform.position = waypoint.transform.position;
+            ////print("Visiting block: " + waypoint); //second execution
+            //yield return new WaitForSeconds(1.5f);
         }
         print("Ending Patrol...");
     }

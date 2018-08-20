@@ -8,14 +8,17 @@ public class test : MonoBehaviour
     public Mesh mesh;
     public Material mat;
     public Vector3 meshPos;
+    //public Transform scale;
 
     public void OnPostRender() 
     {
         
         // set first shader pass of the material
         mat.SetPass(0);
-        // draw mesh at the origin
+        // draws a mesh at the origin or given position
+        
         Graphics.DrawMeshNow(mesh, meshPos, Quaternion.identity);
+        mesh.bounds.size.Set(7f, 6f, 6f);
     }
 }
 
