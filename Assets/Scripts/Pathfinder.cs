@@ -23,13 +23,21 @@ public class Pathfinder : MonoBehaviour {
 
     public List<CubeWaypoint> PathSize() 
     {
-        LoadBlocks();
-        ColorsStartandEnd();
-        ScanSearch(); // in fact Breadth First Search
-        CreatePath();
-        return path;  
+        if (path.Count == 0)
+        {
+            LoadBlocks();
+            ColorsStartandEnd();
+            ScanSearch(); // in fact Breadth First Search
+            CreatePath();
+        }
+        else
+        {
+            return path;
+        }
+
+        return path;
+
     }
-    
 
     private void CreatePath() {
         path.Add(endPoint);

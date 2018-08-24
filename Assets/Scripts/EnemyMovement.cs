@@ -3,19 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour {
-    List<CubeWaypoint> path;
+    //List<CubeWaypoint> path;
     [SerializeField] float movingSpeed = 15f;
 
     void Start () 
     {
         Pathfinder pathfinder = FindObjectOfType<Pathfinder>();
-        path = pathfinder.PathSize();
-        StartCoroutine(PrintAllWayPoints()); // don't forget the reference if encounter a problem "path"
+        var path = pathfinder.PathSize();
+        StartCoroutine(PrintAllWayPoints(path)); // don't forget the reference if encounter a problem "path"
         print("I am at start"); // third execution
     }
 
     // don't forget the reference if encounter a problem "List<CubeWaypoint> path"
-    IEnumerator PrintAllWayPoints() // to add coroutine change return type IEnumerator
+    IEnumerator PrintAllWayPoints(List<CubeWaypoint> path) // to add coroutine change return type IEnumerator
     {
         print("Starting Patrol..."); //firstly executed
         foreach (CubeWaypoint waypoint in path)
@@ -29,7 +29,7 @@ public class EnemyMovement : MonoBehaviour {
             ////print(element.name);
             //transform.position = waypoint.transform.position;
             ////print("Visiting block: " + waypoint); //second execution
-            //yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(1.3f);
         }
         print("Ending Patrol...");
     }

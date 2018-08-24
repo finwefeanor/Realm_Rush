@@ -33,9 +33,9 @@ public class EnemyHit : MonoBehaviour {
         if (takenHits <= 0)
         {
             KillEnemy();
+            Debug.Log("Target Terminated");
         }
-
-        Debug.Log("Target Terminated");
+      
     }
     
     private void ProcessHit() {
