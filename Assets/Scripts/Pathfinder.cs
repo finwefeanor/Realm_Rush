@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Pathfinder : MonoBehaviour {
 
-    [SerializeField] CubeWaypoint startPoint, endPoint;
+    [SerializeField] CubeWaypoint startPoint, endingPoint;
 
     Dictionary<Vector2Int, CubeWaypoint> grid = new Dictionary<Vector2Int, CubeWaypoint>();
     Queue<CubeWaypoint> queue = new Queue<CubeWaypoint>(); // we constructed this like Dictionary
@@ -40,9 +40,9 @@ public class Pathfinder : MonoBehaviour {
     }
 
     private void CreatePath() {
-        path.Add(endPoint);
+        path.Add(endingPoint);
 
-        CubeWaypoint previous = endPoint.exploredFrom;
+        CubeWaypoint previous = endingPoint.exploredFrom;
         while(previous != startPoint)
         {
             path.Add(previous);
@@ -73,7 +73,7 @@ public class Pathfinder : MonoBehaviour {
 
     private void PauseIfEndHasFound() 
     {
-        if (searchStart == endPoint) //searchcenter is dynamic, not bound to startpoint
+        if (searchStart == endingPoint) //searchcenter is dynamic, not bound to startpoint
         {
             //print("Start - End are the same paths!");
             isRunning = false;

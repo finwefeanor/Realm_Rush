@@ -4,12 +4,10 @@ using UnityEngine;
 
 public class RaycastExample : MonoBehaviour 
 {
-    RaycastHit hit;
-    Ray ray;
 
     void Update() 
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
         if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity))

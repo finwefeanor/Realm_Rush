@@ -1,20 +1,25 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 
 public class Tower : MonoBehaviour {
 
-    [SerializeField] Transform targetEnemy;
-    Vector3 targetEnemyPos;
+    // Parameters of each tower
     [SerializeField] GameObject[] guns;
+    [SerializeField] float towerRange;
 
-    public float towerRange;
-    public string distanceInfo;
+    // State of each tower
+    Transform targetEnemy;
+
+
     float enemyDistance;
+    float closestEnemyDistance;
 
     void Update () 
-    {           
+    {
+        SetTargetEnemy();
         if (targetEnemy)
         {
             ShootEnemy();
@@ -27,6 +32,35 @@ public class Tower : MonoBehaviour {
         //RaycastMethod();
     }
 
+    private void SetTargetEnemy() {
+        var sceneEnemies = FindObjectsOfType<EnemyHit>();
+        if(sceneEnemies.Length == 0) { return; }
+
+        Transform closestEnemy = sceneEnemies[0].transform;
+
+        foreach (EnemyHit firstEnemy in sceneEnemies)
+        {
+            closestEnemy = GetClosestEnemy(closestEnemy, firstEnemy.transform);
+        }
+        targetEnemy = closestEnemy;
+    }
+
+    private Transform GetClosestEnemy(Transform transformA, Transform transformB) 
+    {
+        var distanceA = Vector3.Distance(transformA.transform.position, transform.position);
+        var distanceB = Vector3.Distance(transformB.transform.position, transform.position);
+
+        print("distance A: " + distanceA);
+        print("distance B: " + distanceB);
+
+        if (distanceA < distanceB)
+        {
+            return transformA;
+        }
+
+        return transformB;
+    }
+
     private void ShootEnemy() 
     {
         enemyDistance = Vector3.Distance(targetEnemy.transform.position, gameObject.transform.position);
@@ -37,7 +71,6 @@ public class Tower : MonoBehaviour {
             transform.LookAt(targetEnemy);
             if (enemyDistance <= towerRange)
             {
-
                 FireControl(true);
             }
         }

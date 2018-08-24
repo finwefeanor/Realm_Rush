@@ -155,7 +155,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scorePerHit: 12
-  takenHits: 8
+  takenHits: 80
 --- !u!114 &114969215803056610
 MonoBehaviour:
   m_ObjectHideFlags: 1
