@@ -1,11 +1,11 @@
 fileFormatVersion: 2
 guid: 9cb140b9ed6059c41ac29d1324282281
-timeCreated: 1524647295
-licenseType: Free
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - exploredFrom: {instanceID: 0}
+  - towerGO: {fileID: 1440205977433886, guid: af84c2db7cf40a34b9b4a352ba72d1c7, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

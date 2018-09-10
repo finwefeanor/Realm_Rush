@@ -10,7 +10,7 @@ public class CubeWaypoint : MonoBehaviour
     public bool isExplored = false;
     public bool isPlaceable = true;
     public CubeWaypoint exploredFrom;
-    TowerSpawner towerSpawner;
+    [SerializeField] GameObject towerGO;
 
     const int gridSize = 10;
     Vector2Int gridPos;
@@ -27,7 +27,9 @@ public class CubeWaypoint : MonoBehaviour
         
         if (isPlaceable && Input.GetMouseButtonDown(0))
         {
-            Debug.Log("Cube clicked. You can place a tower here: " + gameObject.name);
+            SpawnTowers();
+            isPlaceable = false;
+            Debug.Log("Cube clicked. You can place a tower here: " + gameObject.name);          
         }
         else if (!isPlaceable && Input.GetMouseButtonDown(0))
         {
@@ -35,13 +37,9 @@ public class CubeWaypoint : MonoBehaviour
         }       
     }
 
-    private void TestMethod() 
+    private void SpawnTowers() 
     {
-        
-    }
-
-    void OnMouseExit() {
-
+        GameObject cloneTower = Instantiate(towerGO, gameObject.transform.position, Quaternion.identity);
     }
 
     public int GetGridSize() 

@@ -83,7 +83,7 @@ public class Tower : MonoBehaviour {
             }
         }
         
-        else if (Input.GetButton("Jump") || Input.GetButton("Fire1"))
+        else if (Input.GetButton("Jump"))
         {
             FireControl(true);
         }

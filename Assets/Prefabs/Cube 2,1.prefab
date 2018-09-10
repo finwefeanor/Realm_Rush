@@ -72,8 +72,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4508793942585784}
   - component: {fileID: 23759455634808002}
-  - component: {fileID: 114587639224443794}
-  - component: {fileID: 114161498328905886}
+  - component: {fileID: 114584045899844280}
+  - component: {fileID: 114989751090626448}
   - component: {fileID: 65879106604203084}
   m_Layer: 0
   m_Name: Cube 2,1
@@ -337,7 +337,18 @@ TextMesh:
   m_Color:
     serializedVersion: 2
     rgba: 4281282351
---- !u!114 &114161498328905886
+--- !u!114 &114584045899844280
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1680952820773886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db284ea2b7deccd4baf3c83082426b75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114989751090626448
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -350,15 +361,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   exploredColor: {r: 0, g: 0, b: 0, a: 0}
   isExplored: 0
+  isPlaceable: 1
   exploredFrom: {fileID: 0}
---- !u!114 &114587639224443794
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1680952820773886}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db284ea2b7deccd4baf3c83082426b75, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  towerGO: {fileID: 1440205977433886, guid: af84c2db7cf40a34b9b4a352ba72d1c7, type: 2}

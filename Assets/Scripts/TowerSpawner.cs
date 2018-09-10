@@ -14,15 +14,7 @@ public class TowerSpawner : MonoBehaviour
     public void SpawnTowers() 
     {
         var testVar = towerGO.gameObject;
-        print("Spawnnin works");
         Instantiate(testVar, cubeWaypoint.transform.position, Quaternion.identity);
     }
 
-    void OnMouseOver() {
-
-        if (Input.GetMouseButtonDown(0))
-        {
-            SpawnTowers();
-        }
-    }
 }
