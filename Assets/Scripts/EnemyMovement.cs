@@ -11,13 +11,13 @@ public class EnemyMovement : MonoBehaviour {
         Pathfinder pathfinder = FindObjectOfType<Pathfinder>();
         var path = pathfinder.PathSize();
         StartCoroutine(PrintAllWayPoints(path)); // don't forget the reference if encounter a problem "path"
-        print("I am at start"); // third execution
+        //print("I am at start"); // third execution
     }
 
     // don't forget the reference if encounter a problem "List<CubeWaypoint> path"
     IEnumerator PrintAllWayPoints(List<CubeWaypoint> path) // to add coroutine change return type IEnumerator
     {
-        print("Starting Patrol..."); //firstly executed
+        //print("Starting Patrol..."); //firstly executed
         foreach (CubeWaypoint waypoint in path)
         {
 
@@ -31,7 +31,7 @@ public class EnemyMovement : MonoBehaviour {
             ////print("Visiting block: " + waypoint); //second execution
             yield return new WaitForSeconds(1.3f);
         }
-        print("Ending Patrol...");
+        //print("Ending Patrol...");
     }
 
 }

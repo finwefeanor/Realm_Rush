@@ -26,7 +26,6 @@ public class Pathfinder : MonoBehaviour {
         if (path.Count == 0)
         {
             LoadBlocks();
-            ColorsStartandEnd();
             ScanSearch(); // in fact Breadth First Search
             CreatePath();
         }
@@ -34,26 +33,28 @@ public class Pathfinder : MonoBehaviour {
         {
             return path;
         }
-
         return path;
-
     }
 
-    private void CreatePath() {
-        path.Add(endingPoint);
+    private void CreatePath() 
+    {
+        SetAvailablePath(endingPoint);
 
         CubeWaypoint previous = endingPoint.exploredFrom;
         while(previous != startPoint)
         {
-            path.Add(previous);
+            SetAvailablePath(previous);
             previous = previous.exploredFrom;
         }
 
-        // add start waypoint
-        path.Add(startPoint);
+        SetAvailablePath(startPoint);
         path.Reverse();
-        //reverse the list
-        
+        //reverse the list       
+    }
+
+    private void SetAvailablePath(CubeWaypoint waypoint) {
+        path.Add(waypoint);
+        waypoint.isPlaceable = false;
     }
 
     private void ScanSearch() {
@@ -112,12 +113,6 @@ public class Pathfinder : MonoBehaviour {
         }
     }
 
-    private void ColorsStartandEnd() 
-    {
-        //endPoint.SetColor(Color.red);
-        //startPoint.SetColor(Color.cyan);
-    }
-
     private void LoadBlocks() {
         CubeWaypoint[] waypoints = GetComponentsInChildren<CubeWaypoint>();
         foreach (CubeWaypoint cubeWaypoint in waypoints)
@@ -134,20 +129,7 @@ public class Pathfinder : MonoBehaviour {
             }
             
         }
-        print("Loaded " + grid.Count + " elements");
-    }
-    
-    public void SetthisColor(Color color) 
-    {
-        //_gameObject = GameObject.Find("0,0");
-        MeshRenderer topMeshRenderer = transform.Find("Cube 0,0/Top" + "Cube 4,2/Top").GetComponent<MeshRenderer>();
-        
-        topMeshRenderer.material.color = color;
-    }
+        //print("Loaded " + grid.Count + " elements");
+    }  
 
-    // Update is called once per frame
-    void Update () 
-    {
-		
-	}
 }

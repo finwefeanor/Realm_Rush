@@ -8,7 +8,9 @@ public class CubeWaypoint : MonoBehaviour
 
     //this bool var is for not requeuing grids that already been explored
     public bool isExplored = false;
+    public bool isPlaceable = true;
     public CubeWaypoint exploredFrom;
+    TowerSpawner towerSpawner;
 
     const int gridSize = 10;
     Vector2Int gridPos;
@@ -18,6 +20,28 @@ public class CubeWaypoint : MonoBehaviour
     void Update() 
     {
         SetColor(); 
+    }
+
+    void OnMouseOver() 
+    {
+        
+        if (isPlaceable && Input.GetMouseButtonDown(0))
+        {
+            Debug.Log("Cube clicked. You can place a tower here: " + gameObject.name);
+        }
+        else if (!isPlaceable && Input.GetMouseButtonDown(0))
+        {
+            print("This is the path, You can't place here !!");
+        }       
+    }
+
+    private void TestMethod() 
+    {
+        
+    }
+
+    void OnMouseExit() {
+
     }
 
     public int GetGridSize() 

@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour 
-    {
+{
     [SerializeField] float spawnDelays;
     [SerializeField] EnemyMovement enemyGO;
 
-    // Use this for initialization
     void Start () 
     {
         StartCoroutine(SpawnEnemies());

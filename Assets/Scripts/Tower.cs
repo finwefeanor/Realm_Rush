@@ -35,6 +35,10 @@ public class Tower : MonoBehaviour {
     private void SetTargetEnemy() {
         var sceneEnemies = FindObjectsOfType<EnemyHit>();
         if(sceneEnemies.Length == 0) { return; }
+        if (sceneEnemies.Length > 1)
+        {
+            print("number of enemies in the scene: " + sceneEnemies.Length);
+        }
 
         Transform closestEnemy = sceneEnemies[0].transform;
 
@@ -43,6 +47,10 @@ public class Tower : MonoBehaviour {
             closestEnemy = GetClosestEnemy(closestEnemy, firstEnemy.transform);
         }
         targetEnemy = closestEnemy;
+        if(targetEnemy = closestEnemy)
+        {
+            //print("targetEnemy is the same object with closestEnemey");
+        }
     }
 
     private Transform GetClosestEnemy(Transform transformA, Transform transformB) 
@@ -50,8 +58,8 @@ public class Tower : MonoBehaviour {
         var distanceA = Vector3.Distance(transformA.transform.position, transform.position);
         var distanceB = Vector3.Distance(transformB.transform.position, transform.position);
 
-        print("distance A: " + distanceA);
-        print("distance B: " + distanceB);
+        //print("distance A: " + distanceA);
+        //print("distance B: " + distanceB);
 
         if (distanceA < distanceB)
         {
@@ -64,7 +72,7 @@ public class Tower : MonoBehaviour {
     private void ShootEnemy() 
     {
         enemyDistance = Vector3.Distance(targetEnemy.transform.position, gameObject.transform.position);
-        print("Distance between enemy and tower: " + enemyDistance);
+        //print("Distance between enemy and tower: " + enemyDistance);
 
         if (enemyDistance <= towerRange - 5)
         {
@@ -77,7 +85,6 @@ public class Tower : MonoBehaviour {
         
         else if (Input.GetButton("Jump") || Input.GetButton("Fire1"))
         {
-            print("fire controls are working");
             FireControl(true);
         }
         else
@@ -90,8 +97,7 @@ public class Tower : MonoBehaviour {
     {
 
         foreach (GameObject gun in guns)
-        {
-            
+        {           
             ParticleSystem particle = gun.GetComponentInChildren<ParticleSystem>();
             ParticleSystem.EmissionModule em = particle.emission;
             em.enabled = isActive;
