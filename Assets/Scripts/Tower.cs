@@ -95,7 +95,6 @@ public class Tower : MonoBehaviour {
 
     private void FireControl(bool isActive) 
     {
-
         foreach (GameObject gun in guns)
         {           
             ParticleSystem particle = gun.GetComponentInChildren<ParticleSystem>();

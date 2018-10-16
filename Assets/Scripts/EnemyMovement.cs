@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour {
-    //List<CubeWaypoint> path;
     [SerializeField] float movingSpeed = 15f;
 
     void Start () 
@@ -11,7 +10,6 @@ public class EnemyMovement : MonoBehaviour {
         Pathfinder pathfinder = FindObjectOfType<Pathfinder>();
         var path = pathfinder.PathSize();
         StartCoroutine(PrintAllWayPoints(path)); // don't forget the reference if encounter a problem "path"
-        //print("I am at start"); // third execution
     }
 
     // don't forget the reference if encounter a problem "List<CubeWaypoint> path"

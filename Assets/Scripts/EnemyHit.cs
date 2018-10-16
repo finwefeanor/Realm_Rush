@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyHit : MonoBehaviour {
-
-    //[SerializeField] GameObject deathFX;
-    //[SerializeField] Transform parent;
+public class EnemyHit : MonoBehaviour 
+{
+    [SerializeField] ParticleSystem hitParticles;
+    [SerializeField] ParticleSystem deathParticles;
     [SerializeField] int scorePerHit = 12;
     [SerializeField] int takenHits = 8;
     ScoreHits scoreHits;
@@ -16,15 +16,11 @@ public class EnemyHit : MonoBehaviour {
         scoreHits = FindObjectOfType<ScoreHits>();
 	}
 	
-	// Update is called once per frame
 	private void AddBoxCollider() {
         boxCollider = gameObject.AddComponent<BoxCollider>();
         boxCollider.size = new Vector3(7f, 6f, 6f);
         boxCollider.center = new Vector3(0f, 6f, 0f);
         boxCollider.isTrigger = true;
-        
-
-        //Debug.Log("Collider Size : " + m_Size);
     }
 
     void OnParticleCollision(GameObject other) 
@@ -34,20 +30,24 @@ public class EnemyHit : MonoBehaviour {
         {
             KillEnemy();
             Debug.Log("Target Terminated");
-        }
-      
+        }      
     }
     
-    private void ProcessHit() {
-
+    private void ProcessHit() 
+    {
         scoreHits.EnemyScore(scorePerHit);
         takenHits = takenHits - 1;
+        hitParticles.Play();
     }
 
-    private void KillEnemy() 
-    {
+    private void KillEnemy() {
+        DestroyEffect();
+        Destroy(gameObject);        
+    }
 
-        Destroy(gameObject);
-
+    private void DestroyEffect() {
+        ParticleSystem fx = Instantiate(deathParticles, transform.position, Quaternion.identity);
+        fx.Play();
+        Destroy(fx, 1.4f);
     }
 }
