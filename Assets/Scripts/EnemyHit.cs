@@ -46,7 +46,7 @@ public class EnemyHit : MonoBehaviour
     }
 
     private void DestroyEffect() {
-        ParticleSystem fx = Instantiate(deathParticles, transform.position, Quaternion.identity);
+        var fx = Instantiate(deathParticles, transform.position, Quaternion.identity);
         fx.Play();
         Destroy(fx, 1.4f);
     }

@@ -279,7 +279,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitParticles: {fileID: 198165882701246556}
-  deathParticles: {fileID: 1929956291960174, guid: 1a51bfda454239a41afb7dee687c6ac0,
+  deathParticles: {fileID: 198537984209914932, guid: 1a51bfda454239a41afb7dee687c6ac0,
     type: 2}
   scorePerHit: 12
   takenHits: 20
