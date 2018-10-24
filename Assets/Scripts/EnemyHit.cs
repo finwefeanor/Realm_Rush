@@ -5,7 +5,8 @@ using UnityEngine;
 public class EnemyHit : MonoBehaviour 
 {
     [SerializeField] ParticleSystem hitParticles;
-    [SerializeField] ParticleSystem deathParticles;
+    [SerializeField]
+    ParticleSystem deathParticles;
     [SerializeField] int scorePerHit = 12;
     [SerializeField] int takenHits = 8;
     ScoreHits scoreHits;
@@ -42,12 +43,17 @@ public class EnemyHit : MonoBehaviour
 
     private void KillEnemy() {
         DestroyEffect();
-        Destroy(gameObject);        
+        Destroy(gameObject);
     }
 
-    private void DestroyEffect() {
+    private void DestroyEffect() 
+    {
         var fx = Instantiate(deathParticles, transform.position, Quaternion.identity);
+        //ParticleSystem parts = fx.GetComponent<ParticleSystem>();
         fx.Play();
-        Destroy(fx, 1.4f);
+
+        var main = fx.main;
+        main.stopAction = ParticleSystemStopAction.Destroy;  
+        //Destroy(fx, 3.0f);
     }
 }

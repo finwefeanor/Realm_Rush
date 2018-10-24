@@ -282,7 +282,7 @@ MonoBehaviour:
   deathParticles: {fileID: 198537984209914932, guid: 1a51bfda454239a41afb7dee687c6ac0,
     type: 2}
   scorePerHit: 12
-  takenHits: 20
+  takenHits: 10
 --- !u!114 &114969215803056610
 MonoBehaviour:
   m_ObjectHideFlags: 1
