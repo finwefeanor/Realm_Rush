@@ -11,6 +11,7 @@ public class Pathfinder : MonoBehaviour {
     Queue<CubeWaypoint> queue = new Queue<CubeWaypoint>(); // we constructed this like Dictionary
     public bool isRunning = true;
     CubeWaypoint searchStart; // the current search center. 
+    Tower tower;
 
     List<CubeWaypoint> path = new List<CubeWaypoint>();
 
@@ -41,7 +42,7 @@ public class Pathfinder : MonoBehaviour {
         SetAvailablePath(endingPoint);
 
         CubeWaypoint previous = endingPoint.exploredFrom;
-        while(previous != startPoint)
+        while (previous != startPoint)
         {
             SetAvailablePath(previous);
             previous = previous.exploredFrom;
@@ -63,12 +64,10 @@ public class Pathfinder : MonoBehaviour {
         while (queue.Count > 0 && isRunning) // we confirm something in the queue
         {
             searchStart = queue.Dequeue(); // take it out the queue again
-            //print("Searching from: " + searchStart); // todo remove log   
             PauseIfEndHasFound(); //it stops searching if end has found
             ExploreNeighbors();
             searchStart.isExplored = true;
         }
-
         //print("Is Pathfinding Finished ? ");
     }
 
@@ -126,10 +125,8 @@ public class Pathfinder : MonoBehaviour {
             else
             {
                 grid.Add(gridPos, cubeWaypoint);
-            }
-            
+            }            
         }
         //print("Loaded " + grid.Count + " elements");
     }  
-
 }

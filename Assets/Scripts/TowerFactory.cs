@@ -5,39 +5,51 @@ using UnityEngine;
 public class TowerFactory : MonoBehaviour 
 {
     private int numTowers;
-    [SerializeField] GameObject towerGO;
+    Tower queueTower;
+    [SerializeField] Tower towerGO;
+    [SerializeField] Transform towerParentsTransform;
     [SerializeField] int towerLimit = 2;
 
     Queue<Tower> queue = new Queue<Tower>();
+    private Tower newTower;
+
     //create an empty queue of towers
 
     public void AddTower(CubeWaypoint cubeWaypointBase) 
     {
-        var towers = FindObjectsOfType<Tower>(); // change to queue size
-        numTowers = towers.Length;
+        print(queue.Count);
+        numTowers = queue.Count;
 
         if (numTowers < towerLimit)
         {
-            Instantiate(towerGO, cubeWaypointBase.transform.position, Quaternion.identity);
+            newTower = Instantiate(towerGO, cubeWaypointBase.transform.position,  Quaternion.identity);
+            newTower.transform.parent = towerParentsTransform;
             cubeWaypointBase.isPlaceable = false;
 
-            // set the cubeWaypoitBase
+            newTower.standWaypoint = cubeWaypointBase;
+            cubeWaypointBase.isPlaceable = false;
 
-            // put new tower on the queue
+            queue.Enqueue(newTower);
         }
         else
         {
             MoveExistingTower(cubeWaypointBase);
         }
+        
     }
 
-    private static void MoveExistingTower(CubeWaypoint cubeWaypointBase) 
+    private void MoveExistingTower(CubeWaypoint newBaseWaypoint) 
     {
-        // take bottom tower off queue
-        // set the placeable flags
-        // set the cubeWaypoitBase
-        // put old tower on top of the queue 
+        var oldTower = queue.Dequeue();
+
+        oldTower.standWaypoint.isPlaceable = true;
+        newBaseWaypoint.isPlaceable = false;
+
+        oldTower.standWaypoint = newBaseWaypoint;
+        oldTower.transform.position = newBaseWaypoint.transform.position;
+
+        queue.Enqueue(oldTower);
+
         print("You exceeded tower limit");
-        //todo actually move the tower!
     }
 }

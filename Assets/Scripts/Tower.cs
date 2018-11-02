@@ -9,10 +9,10 @@ public class Tower : MonoBehaviour {
     // Parameters of each tower
     [SerializeField] GameObject[] guns;
     [SerializeField] float towerRange;
+    public CubeWaypoint standWaypoint; //what the  tower is standing on
 
     // State of each tower
     Transform targetEnemy;
-
 
     float enemyDistance;
     float closestEnemyDistance;
@@ -37,7 +37,7 @@ public class Tower : MonoBehaviour {
         if(sceneEnemies.Length == 0) { return; }
         if (sceneEnemies.Length > 1)
         {
-            print("number of enemies in the scene: " + sceneEnemies.Length);
+            //print("number of enemies in the scene: " + sceneEnemies.Length);
         }
 
         Transform closestEnemy = sceneEnemies[0].transform;

@@ -22,16 +22,15 @@ public class CubeWaypoint : MonoBehaviour
     }
 
     void OnMouseOver() 
-    {
-        
+    {        
         if (isPlaceable && Input.GetMouseButtonDown(0))
         {
             FindObjectOfType<TowerFactory>().AddTower(this);
-            Debug.Log("Cube clicked. You can place a tower here: " + gameObject.name);          
+            //Debug.Log("Cube clicked. You can place a tower here: " + gameObject.name);          
         }
         else if (!isPlaceable && Input.GetMouseButtonDown(0))
         {
-            print("This is the path, You can't place here !!");
+            //print("This is the path, You can't place here !!");
         }       
     }
 

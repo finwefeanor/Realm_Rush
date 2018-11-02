@@ -36,6 +36,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4490740839221954}
+  - component: {fileID: 114239427025352066}
   m_Layer: 0
   m_Name: Tower
   m_TagString: Untagged
@@ -53,7 +54,7 @@ GameObject:
   - component: {fileID: 4544373805119022}
   - component: {fileID: 33109021817288036}
   - component: {fileID: 23685478275213272}
-  - component: {fileID: 114918231076349742}
+  - component: {fileID: 114094240254164784}
   m_Layer: 8
   m_Name: Tower_A_Top
   m_TagString: Untagged
@@ -217,7 +218,7 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1871707000665460}
   m_Mesh: {fileID: 4300000, guid: 35ed9326e2ddd4944b9c492d621239ca, type: 3}
---- !u!114 &114918231076349742
+--- !u!114 &114094240254164784
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -231,6 +232,19 @@ MonoBehaviour:
   guns:
   - {fileID: 1289092948976454}
   towerRange: 35
+--- !u!114 &114239427025352066
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1440205977433886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d82c4a22fda091644b746ac7da475011, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  guns: []
+  towerRange: 0
 --- !u!198 &198866051300858946
 ParticleSystem:
   m_ObjectHideFlags: 1

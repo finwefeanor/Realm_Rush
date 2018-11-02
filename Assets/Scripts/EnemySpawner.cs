@@ -6,6 +6,7 @@ public class EnemySpawner : MonoBehaviour
 {
     [SerializeField] float spawnDelays;
     [SerializeField] EnemyMovement enemyGO;
+    //[SerializeField] Transform enemyParentsTransform;
 
     void Start () 
     {
@@ -16,8 +17,10 @@ public class EnemySpawner : MonoBehaviour
     {
         while (true)
         {
-            Instantiate(enemyGO, gameObject.transform.position, Quaternion.identity);
-            print(SpawnEnemies());
+            //var spawningEnemies = 
+                Instantiate(enemyGO, gameObject.transform.position, Quaternion.identity, this.transform);
+            //spawningEnemies.transform.parent = enemyParentsTransform;
+            //print(SpawnEnemies());
             yield return new WaitForSeconds(spawnDelays);
         }
 
