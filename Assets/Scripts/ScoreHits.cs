@@ -5,18 +5,18 @@ using UnityEngine.UI;
 
 public class ScoreHits : MonoBehaviour {
 
-    int score;
+    int scoreEnemy;
     Text scoreText;
  
 	void Start () 
     {
         scoreText = GetComponent<Text>();
-        scoreText.text = score.ToString();
-	}
+        scoreText.text = scoreEnemy.ToString();
+    }
 	
 	public void EnemyScore(int scoreIncrease) {
-        score = score + scoreIncrease;
-        scoreText.text = score.ToString();
+        scoreEnemy = scoreEnemy + scoreIncrease;
+        scoreText.text = scoreEnemy.ToString();
     }
 
 }

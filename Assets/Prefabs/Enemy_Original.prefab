@@ -294,7 +294,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 316a5b753b8b0004b9f757d69bf42d18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movingSpeed: 15
+  movingSpeed: 50
+  movingPeriod: 0.5
 --- !u!198 &198041152956760276
 ParticleSystem:
   m_ObjectHideFlags: 1

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour {
     [SerializeField] float movingSpeed = 15f;
+    [SerializeField] float movingPeriod = 0.5f;
 
     void Start () 
     {
@@ -15,6 +16,7 @@ public class EnemyMovement : MonoBehaviour {
     // don't forget the reference if encounter a problem "List<CubeWaypoint> path"
     IEnumerator PrintAllWayPoints(List<CubeWaypoint> path) // to add coroutine change return type IEnumerator
     {
+        WaitForSeconds delay = new WaitForSeconds(movingPeriod);
         //print("Starting Patrol..."); //firstly executed
         foreach (CubeWaypoint waypoint in path)
         {
@@ -27,9 +29,14 @@ public class EnemyMovement : MonoBehaviour {
             ////print(element.name);
             //transform.position = waypoint.transform.position;
             ////print("Visiting block: " + waypoint); //second execution
-            yield return new WaitForSeconds(1.3f);
+            yield return delay;
         }
-        //print("Ending Patrol...");
+        //var fx = Instantiate(enemyHit.deathParticles, transform.position, Quaternion.identity);
+        //fx.Play();
+
+        //Destroy(gameObject);
+
+        GetComponent<EnemyHit>().KillEnemy();
     }
 
 }

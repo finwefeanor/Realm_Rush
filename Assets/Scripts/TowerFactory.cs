@@ -5,9 +5,8 @@ using UnityEngine;
 public class TowerFactory : MonoBehaviour 
 {
     private int numTowers;
-    Tower queueTower;
     [SerializeField] Tower towerGO;
-    [SerializeField] Transform towerParentsTransform;
+    [SerializeField] Transform towerParentsTransform; // to instantiate towers into a parent
     [SerializeField] int towerLimit = 2;
 
     Queue<Tower> queue = new Queue<Tower>();
@@ -23,7 +22,7 @@ public class TowerFactory : MonoBehaviour
         if (numTowers < towerLimit)
         {
             newTower = Instantiate(towerGO, cubeWaypointBase.transform.position,  Quaternion.identity);
-            newTower.transform.parent = towerParentsTransform;
+            newTower.transform.parent = towerParentsTransform; // to transform towers into a parent gameobject
             cubeWaypointBase.isPlaceable = false;
 
             newTower.standWaypoint = cubeWaypointBase;

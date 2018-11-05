@@ -41,12 +41,12 @@ public class EnemyHit : MonoBehaviour
         hitParticles.Play();
     }
 
-    private void KillEnemy() {
+    public void KillEnemy() {
         DestroyEffect();
-        Destroy(gameObject);
+        Destroy(gameObject); //the enemy
     }
 
-    private void DestroyEffect() 
+    private void DestroyEffect() // the deathparticle
     {
         var fx = Instantiate(deathParticles, transform.position, Quaternion.identity);
         //ParticleSystem parts = fx.GetComponent<ParticleSystem>();
@@ -54,6 +54,6 @@ public class EnemyHit : MonoBehaviour
 
         var main = fx.main;
         main.stopAction = ParticleSystemStopAction.Destroy;  
-        //Destroy(fx, 3.0f);
+        //Destroy(fx, 3.0f); // if use this and not destroyed, try fx.gameobject to destroy.
     }
 }
