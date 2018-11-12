@@ -1,268 +1,128 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class Pathfinder : MonoBehaviour {
-
-    [SerializeField] Waypoint startWaypoint, endWaypoint;
-
-<<<<<<< HEAD
-    Dictionary<Vector2Int, Waypoint> grid = new Dictionary<Vector2Int, Waypoint>();
-    Queue<Waypoint> queue = new Queue<Waypoint>();
-    bool isRunning = true;
-    Waypoint searchCenter;
-    List<Waypoint> path = new List<Waypoint>();
-=======
+    public CubeWaypoint startWaypoint, endWaypoint;
     Dictionary<Vector2Int, CubeWaypoint> grid = new Dictionary<Vector2Int, CubeWaypoint>();
-    SortedDictionary<int, CubeWaypoint> sortedQueue = new SortedDictionary<int, CubeWaypoint>();
-    int counter = 0;
-    Queue<CubeWaypoint> queue = new Queue<CubeWaypoint>(); // we constructed this like Dictionary
-    public bool isRunning = true;
-    CubeWaypoint searchStart; // the current search center. 
-    Tower tower;
-
+    SortedDictionary<int, CubeWaypoint> sortedQueue = new SortedDictionary<int, CubeWaypoint>(); // We use a SortedDictionary instead of a Queue
+    int counter = 0; // this is for sorting purposes (to make sure we don't have duplicate keys in our SortedDictionary
+    bool isRunning = true;
+    CubeWaypoint searchCenter;
     List<CubeWaypoint> path = new List<CubeWaypoint>();
->>>>>>> parent of 226283c... Dijkstra_implementation_1
-
-    Vector2Int[] directions = {
+    Vector2Int[] directions ={
         Vector2Int.up,
         Vector2Int.right,
         Vector2Int.down,
         Vector2Int.left
     };
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-    public List<Waypoint> GetPath()
+    public List<CubeWaypoint> PathSize(CubeWaypoint start, CubeWaypoint end)  // I added the start and end waypoint here so you can send them from another script
     {
+        startWaypoint = start; // this might have been unnessacery <-- spelled incorrect ;) 
+        endWaypoint = end;
+        ResetAllInfo();
         LoadBlocks();
-        ColorStartAndEnd();
-        BreadthFirstSearch();
+        DijkstraSearch();  // Had to rename to Dijkstra ofcourse!
+        StopIfEndIsSearchCenter();
         CreatePath();
         return path;
     }
-
-    private void CreatePath()
+    private void ResetAllInfo() // here we make sure we reset everything so we start clean everytime we create a path
     {
-        path.Add(endWaypoint);
-
-        Waypoint previous = endWaypoint.exploredFrom;
-        while (previous != startWaypoint)
-        {
-            path.Add(previous);
-            previous = previous.exploredFrom;
-        }
-
-        path.Add(startWaypoint);
-        path.Reverse();
+        path.Clear();
+        grid.Clear();
+        sortedQueue.Clear();
+        counter = 0;
+        isRunning = true;
     }
-
-    private void BreadthFirstSearch()
-    {
-        queue.Enqueue(startWaypoint);
-
-        while(queue.Count > 0 && isRunning)
+    private void LoadBlocks() {
+        var waypoints = FindObjectsOfType<CubeWaypoint>();
+        foreach (CubeWaypoint waypoint in waypoints)
         {
-            searchCenter = queue.Dequeue();
-            HaltIfEndFound();
-            ExploreNeighbours();
-            searchCenter.isExplored = true;
-=======
-=======
->>>>>>> parent of 226283c... Dijkstra_implementation_1
-    public List<CubeWaypoint> PathSize() 
-    {
-        if (path.Count == 0)
-        {
-            LoadBlocks();
-            ScanSearch(); // in fact Breadth First Search
-            CreatePath();
-        }
-        else
-        {
-            return path;
-        }
-        return path;
-    }
-
-    private void CreatePath() 
-    {
-        SetAvailablePath(endingPoint);
-
-        CubeWaypoint previous = endingPoint.exploredFrom;
-        while (previous != startPoint)
-        {
-            SetAvailablePath(previous);
-            previous = previous.exploredFrom;
-        }
-
-        SetAvailablePath(startPoint);
-        path.Reverse();
-        //reverse the list       
-    }
-
-    private void SetAvailablePath(CubeWaypoint waypoint) {
-        path.Add(waypoint);
-        waypoint.isPlaceable = false;
-    }
-
-    private void ScanSearch() {
-        queue.Enqueue(startPoint); //add the startpoint to the Queue- so assign the reference (queue) to Enqueue
-
-        while (queue.Count > 0 && isRunning) // we confirm something in the queue
-        {
-            searchStart = queue.Dequeue(); // take it out the queue again
-            PauseIfEndHasFound(); //it stops searching if end has found
-            ExploreNeighbors();
-            searchStart.isExplored = true;
-<<<<<<< HEAD
->>>>>>> parent of 226283c... Dijkstra_implementation_1
-=======
->>>>>>> parent of 226283c... Dijkstra_implementation_1
-        }
-    }
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-    private void HaltIfEndFound()
-    {
-        if (searchCenter == endWaypoint)
-=======
-    private void PauseIfEndHasFound() 
-    {
-        if (searchStart == endingPoint) //searchcenter is dynamic, not bound to startpoint
->>>>>>> parent of 226283c... Dijkstra_implementation_1
-=======
-    private void PauseIfEndHasFound() 
-    {
-        if (searchStart == endingPoint) //searchcenter is dynamic, not bound to startpoint
->>>>>>> parent of 226283c... Dijkstra_implementation_1
-        {
-            isRunning = false;
-        }
-    }
-
-    private void ExploreNeighbours()
-    {
-        if (!isRunning) { return; }
-
-        foreach (Vector2Int direction in directions)
-<<<<<<< HEAD
-        {
-            Vector2Int neighbourCoordinates = searchCenter.GetGridPos() + direction;
-            if (grid.ContainsKey(neighbourCoordinates))
-=======
-        {           
-            var ExploreGridPos = searchStart.GetGridPos() + direction;
-            //print("Exploring block " + ExploreGridPos);
-            //
-            if (grid.ContainsKey(ExploreGridPos)) // or use try-catch
->>>>>>> parent of 226283c... Dijkstra_implementation_1
-            {
-                QueueNewNeighbours(neighbourCoordinates);
-            }
-        }
-    }
-<<<<<<< HEAD
-
-    private void QueueNewNeighbours(Vector2Int neighbourCoordinates)
-    {
-        Waypoint neighbour = grid[neighbourCoordinates];
-        if (neighbour.isExplored || queue.Contains(neighbour))
-        {
-            // do nothing
-=======
-   
-    private void QueueNewNeighbours(Vector2Int ExploreGridPos) 
-    {
-        CubeWaypoint neighbour = grid[ExploreGridPos];
-        if(neighbour.isExplored || queue.Contains(neighbour))
-        {
-            // do nothing   
-<<<<<<< HEAD
->>>>>>> parent of 226283c... Dijkstra_implementation_1
-=======
->>>>>>> parent of 226283c... Dijkstra_implementation_1
-        }
-        else
-        {
-            queue.Enqueue(neighbour);
-<<<<<<< HEAD
-<<<<<<< HEAD
-            neighbour.exploredFrom = searchCenter;
-        }
-    }
-
-    private void ColorStartAndEnd()
-    {
-        // todo consdier moving out
-        startWaypoint.SetTopColor(Color.green);
-        endWaypoint.SetTopColor(Color.red);
-    }
-
-    private void LoadBlocks()
-    {
-        var waypoints = FindObjectsOfType<Waypoint>();
-        foreach (Waypoint waypoint in waypoints)
-        {
+            waypoint.isExplored = false; // I think I added this.. not sure..
+            waypoint.exploredFrom = null;
             var gridPos = waypoint.GetGridPos();
             if (grid.ContainsKey(gridPos))
             {
-                Debug.LogWarning("Skipping overlapping block " + waypoint);
+                Debug.LogWarning("Skipping Overlapping block" + waypoint);
             }
             else
             {
                 grid.Add(gridPos, waypoint);
             }
         }
-    }
-=======
-            neighbour.exploredFrom = searchStart;
-            //print("Queueing " + neighbour);           
-        }
+        print("Loaded" + grid.Count + "Blocks");
     }
 
-    private void LoadBlocks() {
-        CubeWaypoint[] waypoints = GetComponentsInChildren<CubeWaypoint>();
-        foreach (CubeWaypoint cubeWaypoint in waypoints)
+    private void DijkstraSearch() {
+        sortedQueue.Add(0, startWaypoint); // we add the starting point to the SortedDictionary and we give it a Key 0 as it will not cost anything to get there.
+        while (sortedQueue.Count > 0 && isRunning)
         {
-            var gridPos = cubeWaypoint.GetGridPos();
-            if (grid.ContainsKey(gridPos))
+            var first = sortedQueue.First(); // here we get the first value from the dictionary. As it is sorted, it will be the waypoint where we can get with the lowest cost that has not yet been explored
+            int key = first.Key; // we also need the key so we can remove it from the dictionary
+            searchCenter = first.Value; // guess I could have done this 2 rows up.. :o
+            if (searchCenter == endWaypoint) // check if the waypoint we are exploring is the end waypoint
             {
-                Debug.LogWarning("Destroying overlapping block" + cubeWaypoint);
-                Destroy(cubeWaypoint.gameObject);
+                print("Found the end");
+                isRunning = false;
+            }
+
+            sortedQueue.Remove(key); // here we remove the waypoint from the dictionary
+            searchCenter.isExplored = true;
+            ExploreNeighbours();
+        }
+    }
+    private void StopIfEndIsSearchCenter() {
+        if (searchCenter == endWaypoint)
+        {
+            print("Found the end");
+            isRunning = false;
+        }
+    }
+    private void ExploreNeighbours() {
+        if (!isRunning) { return; }
+        foreach (Vector2Int direction in directions)
+        {
+            Vector2Int NeighbourCoordinates = direction + searchCenter.GetGridPos();
+            if (grid.ContainsKey(NeighbourCoordinates))
+            {
+                QueueNewNeighbours(NeighbourCoordinates);
+            }
+        }
+    }
+    private void QueueNewNeighbours(Vector2Int NeighbourCoordinates) {
+        CubeWaypoint neighbour = grid[NeighbourCoordinates];
+        if (neighbour.isExplored != startWaypoint)
+        {
+            if ((neighbour.costForPath > neighbour.travelCost + searchCenter.costForPath || neighbour.exploredFrom == null) && neighbour.walkable)
+            // below should only happen if costs are lower than costs already OR when exploredfrom is empty and the neighbour is walkable.
+            // you should create a public travelCost and a costForPath integer on your waypoint. If you want to have non-walkable waypoint, also add a public bool walkable on there
+            // the travelCost is the cost for getting on that waypoint (so a mountain might be 10, where grassland might be 2). You set this number on the waypoint!
+            // the costForPath should be 0 for all waypoints and is set from here. It will be the lowest cost to get to the waypoint from the starting point.
+            // the walkable bool can be used for oceans or whatever where the player can't go. I've added this so I could change it to true for when the player gets a ship
+            // you should set the walkable bool to true on every waypoint you want to travel on.
+            {
+                neighbour.costForPath = neighbour.travelCost + searchCenter.costForPath; // 6. the cost for path on the neighbour will be the cost for path on the waypoint we are exploring from + the cost of the neighbour itself.
+                neighbour.exploredFrom = searchCenter; // we set the neighbour from which we investigated as the exploredFrom in the neighbour waypoint.
+                sortedQueue.Add(neighbour.costForPath * 1000 + counter, neighbour); // here we add the waypoint to the Dictionary by multiplying the costForPath by a large number and adding the counter
+                // we need to multiply with a high number and add the counter so we will not get an error as we might end up trying to add a key that already exsist in the Dictionary.
+                // we multiply by this high number so the counter won't affect our pathfinding score (costForPath)
+                counter++; // we add 1 to the counter so we get unique keys.
             }
             else
             {
-                grid.Add(gridPos, cubeWaypoint);
-            }            
-        }
-        //print("Loaded " + grid.Count + " elements");
-    }  
->>>>>>> parent of 226283c... Dijkstra_implementation_1
-=======
-            neighbour.exploredFrom = searchStart;
-            //print("Queueing " + neighbour);           
+            }
         }
     }
-
-    private void LoadBlocks() {
-        CubeWaypoint[] waypoints = GetComponentsInChildren<CubeWaypoint>();
-        foreach (CubeWaypoint cubeWaypoint in waypoints)
+    private void CreatePath() {
+        path.Add(endWaypoint);
+        CubeWaypoint previous = endWaypoint.exploredFrom;
+        while (previous != startWaypoint)
         {
-            var gridPos = cubeWaypoint.GetGridPos();
-            if (grid.ContainsKey(gridPos))
-            {
-                Debug.LogWarning("Destroying overlapping block" + cubeWaypoint);
-                Destroy(cubeWaypoint.gameObject);
-            }
-            else
-            {
-                grid.Add(gridPos, cubeWaypoint);
-            }            
+            path.Add(previous);
+            previous = previous.exploredFrom;
         }
-        //print("Loaded " + grid.Count + " elements");
-    }  
->>>>>>> parent of 226283c... Dijkstra_implementation_1
+        path.Add(startWaypoint);
+        path.Reverse();
+    }
 }

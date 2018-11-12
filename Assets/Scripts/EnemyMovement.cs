@@ -1,36 +1,44 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour {
-<<<<<<< HEAD
-=======
-    [SerializeField] float movingSpeed = 15f;
-    [SerializeField] float movingPeriod = 0.5f;
->>>>>>> parent of 226283c... Dijkstra_implementation_1
+    [SerializeField]
+    float movingSpeed = 15f;
+    [SerializeField]
+    float movingPeriod = 0.5f;
+    public CubeWaypoint startWaypoint, endWaypoint;
 
-	// Use this for initialization
-	void Start () {
+    void Start() {
         Pathfinder pathfinder = FindObjectOfType<Pathfinder>();
-<<<<<<< HEAD
-        var path = pathfinder.GetPath();
-        StartCoroutine(FollowPath(path));
-	}
-=======
-        var path = pathfinder.PathSize();
+        var path = pathfinder.PathSize(startWaypoint, endWaypoint);
         StartCoroutine(PrintAllWayPoints(path)); // don't forget the reference if encounter a problem "path"
     }
->>>>>>> parent of 226283c... Dijkstra_implementation_1
 
-    IEnumerator FollowPath(List<Waypoint> path)
+    // don't forget the reference if encounter a problem "List<CubeWaypoint> path"
+    IEnumerator PrintAllWayPoints(List<CubeWaypoint> path) // to add coroutine change return type IEnumerator
     {
-        print("Starting patrol..."); 
-        foreach (Waypoint waypoint in path)
+        WaitForSeconds delay = new WaitForSeconds(movingPeriod);
+        //print("Starting Patrol..."); //firstly executed
+        foreach (CubeWaypoint waypoint in path)
         {
-            transform.position = waypoint.transform.position;
-            yield return new WaitForSeconds(1f);
+
+            while (transform.position != waypoint.transform.position)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, waypoint.transform.position, movingSpeed * Time.deltaTime);
+                yield return null;
+            }
+            ////print(element.name);
+            //transform.position = waypoint.transform.position;
+            ////print("Visiting block: " + waypoint); //second execution
+            yield return delay;
         }
-        print("Ending patrol");
+        //var fx = Instantiate(enemyHit.deathParticles, transform.position, Quaternion.identity);
+        //fx.Play();
+
+        //Destroy(gameObject);
+
+        GetComponent<EnemyHit>().KillEnemy();
     }
+
 }

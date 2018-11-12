@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CubeWaypoint : MonoBehaviour 
-{
-    [SerializeField] Color exploredColor;
+public class CubeWaypoint : MonoBehaviour {
+    [SerializeField]
+    Color exploredColor;
 
     //this bool var is for not requeuing grids that already been explored
     public bool isExplored = false;
@@ -15,14 +15,15 @@ public class CubeWaypoint : MonoBehaviour
     Vector2Int gridPos;
 
     GameObject startWayPoint;
+    public int costForPath;
+    public int travelCost;
+    public bool walkable;
 
-    void Update() 
-    {
-        SetColor(); 
+    void Update() {
+        SetColor();
     }
 
-    void OnMouseOver() 
-    {        
+    void OnMouseOver() {
         if (isPlaceable && Input.GetMouseButtonDown(0))
         {
             FindObjectOfType<TowerFactory>().AddTower(this);
@@ -31,24 +32,21 @@ public class CubeWaypoint : MonoBehaviour
         else if (!isPlaceable && Input.GetMouseButtonDown(0))
         {
             //print("This is the path, You can't place here !!");
-        }       
+        }
     }
 
-    public int GetGridSize() 
-    {
+    public int GetGridSize() {
         return gridSize;
     }
 
-    public Vector2Int GetGridPos() 
-    {
+    public Vector2Int GetGridPos() {
         return new Vector2Int
          (Mathf.RoundToInt(transform.position.x / 10f),
           Mathf.RoundToInt(transform.position.z / 10f)
-         );   
+         );
     }
 
-    public void SetColor() 
-    {
+    public void SetColor() {
         MeshRenderer topMeshRenderer = transform.Find("Top").GetComponent<MeshRenderer>();
         topMeshRenderer.material.color = exploredColor;
 
