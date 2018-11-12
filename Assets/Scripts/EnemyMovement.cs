@@ -1,43 +1,25 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour {
-    [SerializeField] float movingSpeed = 15f;
-    [SerializeField] float movingPeriod = 0.5f;
-    public CubeWaypoint startWaypoint, endWaypoint;
 
-    void Start () 
-    {
+	// Use this for initialization
+	void Start () {
         Pathfinder pathfinder = FindObjectOfType<Pathfinder>();
-        var path = pathfinder.PathSize(startWaypoint, endWaypoint);
-        StartCoroutine(PrintAllWayPoints(path)); // don't forget the reference if encounter a problem "path"
-    }
+        var path = pathfinder.GetPath();
+        StartCoroutine(FollowPath(path));
+	}
 
-    // don't forget the reference if encounter a problem "List<CubeWaypoint> path"
-    IEnumerator PrintAllWayPoints(List<CubeWaypoint> path) // to add coroutine change return type IEnumerator
+    IEnumerator FollowPath(List<Waypoint> path)
     {
-        WaitForSeconds delay = new WaitForSeconds(movingPeriod);
-        //print("Starting Patrol..."); //firstly executed
-        foreach (CubeWaypoint waypoint in path)
+        print("Starting patrol..."); 
+        foreach (Waypoint waypoint in path)
         {
-
-            while (transform.position != waypoint.transform.position)
-            {
-                transform.position = Vector3.MoveTowards(transform.position, waypoint.transform.position, movingSpeed * Time.deltaTime);
-                yield return null;
-            }
-            ////print(element.name);
-            //transform.position = waypoint.transform.position;
-            ////print("Visiting block: " + waypoint); //second execution
-            yield return delay;
+            transform.position = waypoint.transform.position;
+            yield return new WaitForSeconds(1f);
         }
-        //var fx = Instantiate(enemyHit.deathParticles, transform.position, Quaternion.identity);
-        //fx.Play();
-
-        //Destroy(gameObject);
-
-        GetComponent<EnemyHit>().KillEnemy();
+        print("Ending patrol");
     }
-
 }
