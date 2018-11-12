@@ -33,6 +33,7 @@ public class Pathfinder : MonoBehaviour {
     };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     public List<Waypoint> GetPath()
     {
         LoadBlocks();
@@ -68,6 +69,8 @@ public class Pathfinder : MonoBehaviour {
             ExploreNeighbours();
             searchCenter.isExplored = true;
 =======
+=======
+>>>>>>> parent of 226283c... Dijkstra_implementation_1
     public List<CubeWaypoint> PathSize() 
     {
         if (path.Count == 0)
@@ -113,14 +116,23 @@ public class Pathfinder : MonoBehaviour {
             PauseIfEndHasFound(); //it stops searching if end has found
             ExploreNeighbors();
             searchStart.isExplored = true;
+<<<<<<< HEAD
+>>>>>>> parent of 226283c... Dijkstra_implementation_1
+=======
 >>>>>>> parent of 226283c... Dijkstra_implementation_1
         }
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     private void HaltIfEndFound()
     {
         if (searchCenter == endWaypoint)
+=======
+    private void PauseIfEndHasFound() 
+    {
+        if (searchStart == endingPoint) //searchcenter is dynamic, not bound to startpoint
+>>>>>>> parent of 226283c... Dijkstra_implementation_1
 =======
     private void PauseIfEndHasFound() 
     {
@@ -168,11 +180,15 @@ public class Pathfinder : MonoBehaviour {
         if(neighbour.isExplored || queue.Contains(neighbour))
         {
             // do nothing   
+<<<<<<< HEAD
+>>>>>>> parent of 226283c... Dijkstra_implementation_1
+=======
 >>>>>>> parent of 226283c... Dijkstra_implementation_1
         }
         else
         {
             queue.Enqueue(neighbour);
+<<<<<<< HEAD
 <<<<<<< HEAD
             neighbour.exploredFrom = searchCenter;
         }
@@ -201,6 +217,30 @@ public class Pathfinder : MonoBehaviour {
             }
         }
     }
+=======
+            neighbour.exploredFrom = searchStart;
+            //print("Queueing " + neighbour);           
+        }
+    }
+
+    private void LoadBlocks() {
+        CubeWaypoint[] waypoints = GetComponentsInChildren<CubeWaypoint>();
+        foreach (CubeWaypoint cubeWaypoint in waypoints)
+        {
+            var gridPos = cubeWaypoint.GetGridPos();
+            if (grid.ContainsKey(gridPos))
+            {
+                Debug.LogWarning("Destroying overlapping block" + cubeWaypoint);
+                Destroy(cubeWaypoint.gameObject);
+            }
+            else
+            {
+                grid.Add(gridPos, cubeWaypoint);
+            }            
+        }
+        //print("Loaded " + grid.Count + " elements");
+    }  
+>>>>>>> parent of 226283c... Dijkstra_implementation_1
 =======
             neighbour.exploredFrom = searchStart;
             //print("Queueing " + neighbour);           
