@@ -5,11 +5,12 @@ using UnityEngine;
 public class EnemyMovement : MonoBehaviour {
     [SerializeField] float movingSpeed = 15f;
     [SerializeField] float movingPeriod = 0.5f;
+    public CubeWaypoint startWaypoint, endWaypoint;
 
     void Start () 
     {
         Pathfinder pathfinder = FindObjectOfType<Pathfinder>();
-        var path = pathfinder.PathSize();
+        var path = pathfinder.PathSize(startWaypoint, endWaypoint);
         StartCoroutine(PrintAllWayPoints(path)); // don't forget the reference if encounter a problem "path"
     }
 

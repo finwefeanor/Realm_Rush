@@ -15,6 +15,9 @@ public class CubeWaypoint : MonoBehaviour
     Vector2Int gridPos;
 
     GameObject startWayPoint;
+    public int costForPath;
+    public int travelCost;
+    public bool walkable;
 
     void Update() 
     {
