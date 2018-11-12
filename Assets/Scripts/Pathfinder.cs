@@ -8,6 +8,8 @@ public class Pathfinder : MonoBehaviour {
     [SerializeField] CubeWaypoint startPoint, endingPoint;
 
     Dictionary<Vector2Int, CubeWaypoint> grid = new Dictionary<Vector2Int, CubeWaypoint>();
+    SortedDictionary<int, CubeWaypoint> sortedQueue = new SortedDictionary<int, CubeWaypoint>();
+    int counter = 0;
     Queue<CubeWaypoint> queue = new Queue<CubeWaypoint>(); // we constructed this like Dictionary
     public bool isRunning = true;
     CubeWaypoint searchStart; // the current search center. 
