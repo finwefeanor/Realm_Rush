@@ -8,6 +8,8 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] float spawnDelays;
     [SerializeField] EnemyMovement enemyGO;
     [SerializeField] Text spawnedEnemyCounter;
+    [SerializeField] AudioClip spawnedEnemySFX;
+
 
     int enemyCounter = 0;
     //[SerializeField] Transform enemyParentsTransform;
@@ -28,8 +30,9 @@ public class EnemySpawner : MonoBehaviour
                 Instantiate(enemyGO, gameObject.transform.position, Quaternion.identity, this.transform);
             //spawningEnemies.transform.parent = enemyParentsTransform;
             
-            enemyCounter++; // todo if it matters move this above to spawningEnemies
+            enemyCounter++; // todo if it matters move this above to "spawningEnemies"
             spawnedEnemyCounter.text = enemyCounter.ToString();
+            GetComponent<AudioSource>().PlayOneShot(spawnedEnemySFX);
             print(enemyCounter);
 
             yield return delay;

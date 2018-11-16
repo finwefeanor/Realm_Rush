@@ -11,11 +11,16 @@ public class EnemyHit : MonoBehaviour
     [SerializeField] int takenHits = 8;
     ScoreHits scoreHits;
     BoxCollider boxCollider;
+    [SerializeField] AudioClip enemyHitSFX;
+    [SerializeField] AudioClip enemyDeathSFX;
+
+    AudioSource myAudioSource;
 
     void Start () {
         //AddBoxCollider();
         scoreHits = FindObjectOfType<ScoreHits>();
-	}
+        myAudioSource = GetComponent<AudioSource>();
+    }
 	
 	private void AddBoxCollider() {
         boxCollider = gameObject.AddComponent<BoxCollider>();
@@ -26,6 +31,7 @@ public class EnemyHit : MonoBehaviour
 
     void OnParticleCollision(GameObject other) 
     {
+       
         ProcessHit();
         if (takenHits <= 0)
         {
@@ -39,16 +45,22 @@ public class EnemyHit : MonoBehaviour
         scoreHits.EnemyScore(scorePerHit);
         takenHits = takenHits - 1;
         hitParticles.Play();
+        GetComponent<AudioSource>().PlayOneShot(enemyHitSFX);
     }
 
-    public void KillEnemy() {
+    public void KillEnemy() 
+    {  
         DestroyEffect();
+        //AudioSource.PlayClipAtPoint(enemyDeathSFX, Camera.main.transform.position);
+        
         Destroy(gameObject); //the enemy
     }
 
     private void DestroyEffect() // the deathparticle
     {
         var fx = Instantiate(deathParticles, transform.position, Quaternion.identity);
+        AudioSource src = fx.gameObject.AddComponent<AudioSource>();
+        src.PlayOneShot(enemyDeathSFX);
         //ParticleSystem parts = fx.GetComponent<ParticleSystem>();
         fx.Play();
 

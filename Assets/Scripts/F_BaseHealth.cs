@@ -9,15 +9,18 @@ public class F_BaseHealth : MonoBehaviour {
     public int baseHealth = 100;
     [SerializeField] int takenhits = 10;
     [SerializeField] Text baseHealthText;
+    [SerializeField] AudioClip enemyReachedBaseSFX;
 
     ScoreHits scoreHits;
     void Start() {
         baseHealthText.text = baseHealth.ToString();
     }
 
-    void OnTriggerEnter(Collider other) {
+    void OnTriggerEnter(Collider other) 
+    {
         print("base collider working");
 
+        GetComponent<AudioSource>().PlayOneShot(enemyReachedBaseSFX);
         baseHealth = baseHealth - takenhits;
         baseHealthText.text = baseHealth.ToString();
 
